@@ -6,8 +6,6 @@ services:
     environment:
     - PUID=1000
     - PGID=1000
-    - MONGO_INITDB_ROOT_USERNAME=root
-    - MONGO_INITDB_ROOT_PASSWORD=root
     volumes:
       - /home/barry/mongodb/database:/data/db
     ports:
