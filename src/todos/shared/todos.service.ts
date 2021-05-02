@@ -5,8 +5,6 @@ import { Model } from 'mongoose'
 
 @Injectable()
 export class TodosService {
-  todos = []
-
   constructor(@InjectModel('Todo') private readonly todoModel: Model<Todo>) {}
 
   async getAll() {

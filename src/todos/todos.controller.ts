@@ -15,14 +15,29 @@ export class TodosController {
   async getById(@Param('id') id: string): Promise<Todo> {
     return this.todoService.getById(id)
   }
+
   @Post()
-  async createTodo(@Body() todo: Todo): Promise<Todo> {
+  async createTodo(@Body() todo: Todo) {
+    const { description } = todo
+    const { completed } = todo
+    if (description.length < 3)
+      return {
+        error: 'Description must be longer than two character',
+      }
+    if (completed == null || completed == undefined) {
+      todo.completed = false
+    }
     return this.todoService.createTodo(todo)
   }
 
   @Put(':id')
-  async updateTodo(@Param('id') id: string, @Body() todo: Todo): Promise<Todo> {
+  async updateTodo(@Param('id') id: string, @Body() todo: Todo) {
     todo.id = id
+    const { description } = todo
+    if (description.length < 1)
+      return {
+        error: 'Description must be longer than one character',
+      }
     return this.todoService.updateTodo(id, todo)
   }
 
