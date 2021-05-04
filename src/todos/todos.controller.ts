@@ -7,8 +7,8 @@ export class TodosController {
   constructor(private readonly todoService: TodosService) {}
 
   @Get()
-  async getAll(): Promise<Array<Todo>> {
-    return this.todoService.getAll()
+  async getAll(@Body() userId): Promise<Array<Todo>> {
+    return this.todoService.getAll(userId.userId)
   }
 
   @Get(':id')
@@ -16,10 +16,12 @@ export class TodosController {
     return this.todoService.getById(id)
   }
 
-  @Post()
-  async createTodo(@Body() todo: Todo) {
-    const { description } = todo
-    const { completed } = todo
+  @Post('create/')
+  async createTodo(@Body() todo: Todo, @Body() userId) {
+    todo.owner = userId.userId
+
+    const { description, completed } = todo
+
     if (description.length < 3)
       return {
         error: 'Description must be longer than two character',
@@ -31,14 +33,26 @@ export class TodosController {
   }
 
   @Put(':id')
-  async updateTodo(@Param('id') id: string, @Body() todo: Todo) {
+  async updateTodo(
+    @Param('id') id: string,
+    @Body() todo: Todo,
+    @Body() userId,
+  ) {
     todo.id = id
+    const dbTodo = await this.todoService.getById(id)
+    if (userId.userId != dbTodo.owner)
+      return { message: 'You are not allowed to edit this item' }
+
     const { description } = todo
     if (description.length < 1)
       return {
         error: 'Description must be longer than one character',
       }
-    return this.todoService.updateTodo(id, todo)
+
+    if (dbTodo.completed == true) {
+      todo.dueDate = new Date()
+      return await this.todoService.updateTodo(id, todo)
+    }
   }
 
   @Delete(':id')
