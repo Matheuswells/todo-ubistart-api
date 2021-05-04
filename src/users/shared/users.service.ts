@@ -29,7 +29,7 @@ export class UsersService {
   }
 
   async generateToken(id: string) {
-    const hash = jwt.sign({ id: id }, 'b12268cd7cb028dd180bb451bdc4181e')
+    const hash = jwt.sign({ id: id }, process.env.APP_SECRET)
     const token = `Bearer ${hash}`
     return token
   }

@@ -6,11 +6,13 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { AuthMiddleware } from 'src/middlewares/auth.middleware'
 import { UsersModule } from 'src/users/users.module'
 import { AdminModule } from 'src/admin/admin.module'
+import * as dotenv from 'dotenv'
+dotenv.config()
 @Module({
   imports: [
     //ConfigModule.forRoot(),
     MongooseModule.forRoot(
-      `mongodb://localhost:27017/todoubistart?retryWrites=true&w=majority`,
+      `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?retryWrites=true&w=majority`,
     ),
     TodosModule,
     UsersModule,

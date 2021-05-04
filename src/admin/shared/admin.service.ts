@@ -12,7 +12,7 @@ export class AdminService {
     if (!user) return { message: 'user not found' }
     if (!key) return { message: 'key not provided' }
     user.administrator = true
-    if (key == 'bcb1919def1affd2f4f769b4f0f39c0e')
+    if (key == process.env.ADMIN)
       return this.userModel.updateOne({ _id: id }, user)
   }
 }

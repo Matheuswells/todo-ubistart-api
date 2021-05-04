@@ -21,10 +21,7 @@ export class AuthMiddleware implements NestMiddleware {
     }
 
     try {
-      const decoded = await promisify(jwt.verify)(
-        token,
-        'b12268cd7cb028dd180bb451bdc4181e',
-      )
+      const decoded = await promisify(jwt.verify)(token, process.env.APP_SECRET)
       req.body.userId = decoded.id
       return next()
     } catch (err) {
