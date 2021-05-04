@@ -26,6 +26,7 @@
     "@nestjs/mongoose": "^7.2.4",
     "@nestjs/platform-express": "^7.6.15",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.7",
     "reflect-metadata": "^0.1.13",

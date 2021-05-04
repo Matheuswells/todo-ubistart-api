@@ -6,11 +6,11 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { AuthMiddleware } from 'src/middlewares/auth.middleware'
 import { UsersModule } from 'src/users/users.module'
 import { AdminModule } from 'src/admin/admin.module'
-
 @Module({
   imports: [
+    //ConfigModule.forRoot(),
     MongooseModule.forRoot(
-      'mongodb://localhost:27017/todoubistart?retryWrites=true&w=majority',
+      `mongodb://localhost:27017/todoubistart?retryWrites=true&w=majority`,
     ),
     TodosModule,
     UsersModule,

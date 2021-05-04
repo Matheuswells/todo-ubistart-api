@@ -4,6 +4,8 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import * as bcrypt from 'bcryptjs'
 import * as jwt from 'jsonwebtoken'
+import * as dotenv from 'dotenv'
+dotenv.config()
 @Injectable()
 export class UsersService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
@@ -27,7 +29,7 @@ export class UsersService {
   }
 
   async generateToken(id: string) {
-    const hash = jwt.sign({ id: id }, 'secret')
+    const hash = jwt.sign({ id: id }, 'b12268cd7cb028dd180bb451bdc4181e')
     const token = `Bearer ${hash}`
     return token
   }
@@ -45,9 +47,9 @@ export class UsersService {
   }
 
   async login(loginEmail: string, loginPassword: string) {
-    const { password } = await this.userModel
-      .findOne({ email: loginEmail })
-      .exec()
+    const user = await this.userModel.findOne({ email: loginEmail }).exec()
+    if (!user) return false
+    const { password } = user
     return await bcrypt.compare(loginPassword, password)
   }
 }

@@ -12,7 +12,7 @@ export class AdminService {
     if (!user) return { message: 'user not found' }
     if (!key) return { message: 'key not provided' }
     user.administrator = true
-    if (key == 'secret') return this.userModel.updateOne({ _id: id }, user)
-    return { message: 'wrong key' }
+    if (key == 'bcb1919def1affd2f4f769b4f0f39c0e')
+      return this.userModel.updateOne({ _id: id }, user)
   }
 }

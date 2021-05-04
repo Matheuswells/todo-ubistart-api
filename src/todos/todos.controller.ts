@@ -22,6 +22,8 @@ export class TodosController {
 
     const { description, completed } = todo
 
+    if (!description) return { message: 'description must be provided' }
+
     if (description.length < 3)
       return {
         error: 'Description must be longer than two character',
@@ -40,6 +42,7 @@ export class TodosController {
   ) {
     todo.id = id
     const dbTodo = await this.todoService.getById(id)
+    if (!dbTodo) return { message: 'Item not found' }
     if (userId.userId != dbTodo.owner)
       return { message: 'You are not allowed to edit this item' }
 
@@ -48,15 +51,15 @@ export class TodosController {
       return {
         error: 'Description must be longer than one character',
       }
-
     if (dbTodo.completed == true) {
       todo.dueDate = new Date()
       return await this.todoService.updateTodo(id, todo)
     }
+    return await this.todoService.updateTodo(id, todo)
   }
 
   @Delete(':id')
-  async deleteTodo(@Param('id') id: string) {
-    return this.todoService.deleteTodo(id)
+  async deleteTodo(@Param('id') id: string, @Body() userId) {
+    return this.todoService.deleteTodo(id, userId.userId)
   }
 }
