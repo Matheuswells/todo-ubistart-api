@@ -31,6 +31,18 @@
 ```bash
 $ npm install
 ```
+## Configure database
+Run the docker-compose file in "db" folder 
+docker-compose up -d
+
+## Configure Enviroment variables
+ 
+ - Copy the file env.model in root directory and rename to .env 
+ - Edit this file 
+ - adding a APP_SECRET keyword (Can be a md5 hash)
+ - adding a ADMIN keyword (Can be a md5 hash)
+ - set the DB_HOST to localhost or 127.0.0.1
+ - set the DB_PORT to 27017
 
 ## Running the app
 
@@ -57,16 +69,6 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
